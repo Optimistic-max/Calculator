@@ -27,7 +27,7 @@ window.resizable(False, False)
 frame = tkinter.Frame(window)
 label = tkinter.Label(frame, text='0', font = ("Arial", 45),
                       background=color_black,
-                      foreground = color_white, anchor = "e")
+                      foreground = color_white, anchor = "e", width = column_count)
 
 label.grid(row=0, column=0,columnspan = column_count, sticky = "we")
 
@@ -52,9 +52,36 @@ A = "0"
 operator = None
 B=None
 
+def clear_all():
+    global A, B, operator
+    A = "0"
+    operator = None
+    B = None
 
 def button_clicked(value):
     global right_symbols, top_symbols, A, B, operator
+
+    if value in right_symbols:
+        pass
+    elif value in top_symbols:
+        if value == "AC":
+            clear_all()
+            label["text"] = "0"
+
+        elif value == "+/-":
+            result = float(label['text']) * -1
+            label['text'] = str(result)
+        elif value == "%":
+            pass
+    else: #digits or .
+        if value == ".":
+            if value not in label['text']:
+                label['text'] += value
+        elif value in "0123456789":
+            if label['text'] == '0':
+                label['text'] = value
+            else:
+                label['text'] += value
 #center the window
 window.update() #update window with new size dimensions
 window_width = window.winfo_width()
